@@ -21,17 +21,24 @@ function binname=mcpath(fname)
 %
 % -- this function is part of iso2mesh toolbox (http://iso2mesh.sf.net)
 %
-
+exesuff = getexeext;
 p=getvarfrom({'caller','base'},'ISO2MESH_BIN');
-binname=[];
 if(isempty(p))
 	% the bin folder under iso2mesh is searched first
 	tempname=[fileparts(which(mfilename)) filesep 'bin' filesep fname];
-	if(exist([fileparts(which(mfilename)) filesep 'bin'])==7)
+    if(exist([fileparts(which(mfilename)) filesep 'bin'])==7)
 		binname=tempname;
-	else
-		binname=fname;
-	end
+    else
+        fp = which( [fname,exesuff] );
+        i = find(fp == filesep);
+        if ~isempty(i)
+            i = i(end);
+            fp = fp(1:i);
+            binname = [fp,fname];
+        else
+            binname=fname;
+        end
+    end
 else
 	binname=[p filesep fname];
 end
