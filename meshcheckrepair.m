@@ -64,7 +64,7 @@ if(nargin<3 || strcmp(opt,'deep'))
 end
 
 exesuff=fallbackexeext(getexeext,'meshfix');
-moreopt=' -q -a 0.01 ';
+moreopt=' -a 0.01 ';
 if(isstruct(extra) && isfield(extra,'MeshfixParam'))
     moreopt=extra.MeshfixParam;
 end
@@ -73,7 +73,7 @@ if(nargin>=3 && strcmp(opt,'meshfix'))
     deletemeshfile(mwpath('pre_sclean.off'));
     deletemeshfile(mwpath('pre_sclean_fixed.off'));
     saveoff(node,elem,mwpath('pre_sclean.off'));
-    system([' "' mcpath('meshfix') exesuff '" "' mwpath('pre_sclean.off') ...
+    [~,~] = system([' "' mcpath('meshfix') exesuff '" "' mwpath('pre_sclean.off') ...
         '" ' moreopt]);
     [node,elem]=readoff(mwpath('pre_sclean_fixed.off'));
 end
