@@ -24,6 +24,10 @@ function tempname=mwpath(fname)
 
 p=getvarfrom({'caller','base'},'ISO2MESH_TEMP');
 session=getvarfrom({'caller','base'},'ISO2MESH_SESSION');
+w = getCurrentWorker;
+if ~isempty(w)
+   session = ['pid', num2str(w.ProcessId)];
+end
 
 username=getenv('USER'); % for Linux/Unix/Mac OS
 
